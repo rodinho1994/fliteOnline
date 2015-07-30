@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Send</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="icon" href="../../favicon.ico">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/send.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    
+    <script src="js/ie-emulation-modes-warning.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+    <script type="text/javascript" src="js/filter.js"></script>
+    <script type="text/javascript" src="js/parse-angular.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    
+  </head>
+
+  <body ng-app="Flite">
+    <div id="fb-root"></div>
+
+    <div ng-controller="Logistics as l" class="container" ng-init="l.initialize()">
+      <div class="page-header title">
+        <h1 color="black">Send a Parcel</h1>
+      </div>
+
+      <div class="title">
+        <h2>Item:</h2>
+      </div>
+
+
+      <div id="price" class="jumbotron">
+        <div class="row">
+          <div class="col-md-7">
+
+            <div class="row">
+              <div class="col-lg-12" >
+                <h4>Parcel Name:</h4>
+                <input id="name" type="text" ng-model="l.item.name" class="form-control col-sm-6 input-lg" placeholder="Enter a name for your parcel " required>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-4 col-xs-4 col-md-4">
+                <h4>Weight:</h4>
+                <input id="weight" ng-model="l.item.weight" class="form-control input-lg" type="number" min="1" max="5"/>
+                <h4><span class="text-vertical-center" ng-bind="' ' + l.weightLabels[l.item.weight - 1]"></span></h4>
+              </div>
+
+              <div class="col-lg-4 col-xs-4 col-md-4">
+                <h4>Size:</h4>
+                <input id="size" ng-model="l.item.size"class="form-control input-lg" type="number" min="1" max="5"/>
+                <h4><span class="text-vertical-center" ng-bind= "l.sizeLabels[l.item.size - 1]"></span></h4>
+              </div>
+
+              <div class="col-lg-4 col-xs-4 col-md-4">
+                <h4>Value:</h4>
+                <input id="value" ng-model="l.item.value" class="form-control input-lg" type="number" min="1" max="5"/>
+                <h4><span class="text-vertical-center" ng-bind="' ' + l.valueLabels[l.item.value - 1]"></span></h4>
+              </div>
+
+            </div>
+          </div>
+      
+          <div class="col-md-5">
+            <h1>Price: <span ng-bind='(l.total()| currency)'></span></h1>
+          </div>
+
+        </div>
+      </div>
+
+
+
+      <div class="title">
+        <h2>Logistics:</h2>
+      </div>
+
+      <div id="logistics"class="jumbotron">
+        <div class="row">
+          <h4>From:</h4>
+          <input  id="autocomplete" type="text" class="form-control col-sm-12 input-lg" placeholder="Departure City" required>
+        </div>
+        
+        <div class="row">
+          <h4>To:</h4>
+           <input id="autocomplete2" type="text"  class="form-control col-sm-12 input-lg" placeholder="Destination City" required>
+        </div>
+
+        <div class="row">
+          <h4>When:</h4>
+          <input type="date" ng-model="l.sender.byWhen" class="form-control col-sm-12 input-lg">
+        </div>
+      
+
+        <div class="row">
+          <br></br>
+
+          <h4>Reciever Information:</h4>
+
+          <div class="row">
+            <div class="col-lg-6 col-xs-6 col-md-6">
+              <input id="nameReciever" type="text" ng-model="l.reciever.name" class="form-control input-lg" placeholder="Name of Receiver" required>
+            </div>
+
+            <div class="col-lg-6 col-xs-6 col-md-6">
+              <input id="phoneReciever" type="text" ng-model="l.reciever.phone" class="form-control input-lg" placeholder="Phone of Receiver" required>
+            </div>
+          </div>
+
+          <br>
+          <div class="row">
+            <div class="col-lg-12 col-xs-12 col-md-12">
+              <input id="autocomplete3" type="text" class="form-control input-lg" placeholder="Address of Reciever" required>
+            </div>  
+          </div> 
+
+          <br>
+          <div class="row">
+            <div class="col-lg-4 col-lg-offset-5">
+              <input class="btn-lg btn-danger" ng-click="l.save()" type="submit" value="Post" />
+            </div>  
+          </div> 
+
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>

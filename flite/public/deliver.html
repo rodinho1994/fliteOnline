@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html >
+<head>
+ <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for $scope template -->
+    <link href="css/deliver.css" rel="stylesheet">
+  <title class="title">Deliver</title>
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+    <script type="text/javascript" src="js/filter.js"></script>
+    <script type="text/javascript" src="js/parse-angular.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
+
+</head>
+
+<body ng-app="Flite">
+  <div id="fb-root"></div>
+  <div class="container" ng-controller="Deliver as d" ng-init="d.initialize()">
+        <div class="page-header">
+          <h1 class="title">Deliver a Parcel:</h1>
+        </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-xs-6 title">
+        <h2 class="title">From:</h2>
+        <input id="autocomplete" type="text" class="form-control input-lg" placeholder="Departure City" required>
+      </div>
+      <div class="col-lg-6 col-md-6 col-xs-6 title">
+        <h2 class="title">To:</h2>
+        <input id="autocomplete2" type="text" class="form-control input-lg col-lg-12" placeholder="City Destination" required>
+      </div>
+    </div>
+
+    <div class="cool"><br>
+      <h2 class="title">Arrival Date & Time</h2>
+      <input type="date" ng-model="d.deliverer.dateOfTravel" class="form-control input-lg" >
+    </div><br>
+
+    <button ng-click="d.save()" class="btn btn-lg btn-danger cool">Search</button>
+  </div>
+ 
+ </body>
+</html>

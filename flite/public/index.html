@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>fliite</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/stylish-portfolio.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+    <script type="text/javascript" src="js/filter.js"></script>
+    <script type="text/javascript" src="js/parse-angular.js"></script>
+
+</head>
+
+<body ng-app="Flite">
+    <div id="fb-root"></div>
+    <h1>{{sessionUser}}</h1>
+    <!-- Navigation -->
+    <!--a id="login" href="#about" class="btn btn-info btn-danger toggle">Log in / Sign Up</a-->
+    <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+    <nav id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+            <li class="sidebar-brand">
+                <a href="#top"  onclick = $("#menu-close").click(); >flite</a>
+            </li>
+            <li>
+                <a href="#top" onclick = $("#menu-close").click(); >Home</a>
+            </li>
+            <li>
+                <a href="#about" onclick = $("#menu-close").click(); >About us</a>
+            </li>
+            <li>
+                <a href="#services" onclick = $("#menu-close").click(); >Services</a>
+            </li>
+            <li>
+                <a href="#contact" onclick = $("#menu-close").click(); >Contact</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Header -->
+    <header id="login1" class="header">
+        <div class="text-vertical-center" ng-controller="UserForm as u">
+            <h1>fliite</h1>
+            <h3>Your Parcels via You</h3>
+            <br/>
+
+            <a class="btn btn-info btn-lg" ng-show="sessionUser" class="btn btn-info btn-lg" href="chooser.html">SEND</a>
+
+            <br/>
+
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <a ng-hide="sessionUser" class="btn btn-info btn-lg" href="login.html">Log In</a>
+
+                    <a ng-hide="sessionUser" class="btn btn-info btn-lg" href="signup.html" >Sign Up</a>
+
+                    <button class="btn btn-info btn-lg" ng-show="sessionUser" ng-click="u.logOut()" class="btn btn-info btn-lg" href="chooser.html">Log Out</a>
+                </div>
+            </div>
+
+            
+
+            <div id="status"></div>
+
+            <a href="#about" class="btn btn-info btn-lg">Find Out More</a>
+
+        </div>
+    </header>
+
+    <!-- About -->
+    <section id="about" class="about">
+        <div class="container">
+          <br>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>About Us</h2>
+                    <p class="lead"> flite enables you to send parcels all around the world, using travellers that are going to your chosen destination! We make sure that your parcels travel faster, safer and cheaper!  </p>
+                </div>
+            </div>
+            <br>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+
+    <!-- Services -->
+    <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
+    <section id="services" class="services bg-primary">
+        <div class="container">
+            <div class="row text-center">
+                <div>
+                    <h2>Our Services</h2>
+                    <hr class="small">
+                </div>
+
+                <div class="row row-centered">
+                    <div class="col-md-4 col-sm-12" >
+                        <div>
+
+                            <img src="img/faster.png" class="icons">
+                            <br>
+                            <h4>
+                                <strong>Faster</strong>
+                            </h4>
+                            <p>flite delivers your parcels on the very same day!</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div>
+                            <img src="img/cheaper.png" class="icons">
+                            <br>
+                            <h4>
+                                <strong>Cheaper</strong>
+                            </h4>
+                            <p>flite is the cheapest international courrier around!</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div>
+
+                            <img src="img/safe.png" class="icons">
+                            <br>
+                            <h4>
+                                <strong>Safer</strong>
+                            </h4>
+                            <p>flite makes sure that all of your parcels will arrive safely to your desired destination!</p>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.row (nested) -->
+            </div>
+            <!-- /.col-lg-10 -->
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+
+
+
+
+    <!-- Map -->
+    <section id="contact" class="map">
+        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.444194301716!2d-79.39741500000007!3d43.659730900000014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b34c0acc7e80b%3A0xf855e8cd942bf650!2sBahen+Centre+for+Information+Technology%2C+University+of+Toronto+-+St.+George+Campus%2C+St+George+St%2C+Toronto%2C+ON+M5S+2E4!5e0!3m2!1sen!2sca!4v1438228682914" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>></iframe>
+        <br />
+        <small>
+            <a href="https://www.google.ca/maps/place/Bahen+Centre+for+Information+Technology,+University+of+Toronto+-+St.+George+Campus,+St+George+St,+Toronto,+ON+M5S+2E4/@43.6597309,-79.397415,17z/data=!3m1!4b1!4m2!3m1!1s0x882b34c0acc7e80b:0xf855e8cd942bf650?hl=en"></a>
+        </small>
+        </iframe>
+    </section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 text-center">
+                <h4><strong>fliite</strong>
+                </h4>
+                <p>40 St George St<br>Toronto, ON M5S 2E4</p>
+                <ul class="list-unstyled">
+                    <li><i class="fa fa-phone fa-fw"></i>(647)-235-0027</li>
+                    <li><i class="fa fa-envelope-o fa-fw"></i>  <a href="mailto:name@example.com">kader.laraichi@mail.utoronto.ca</a>
+                    </li>
+                </ul>
+                <br>
+                <ul class="list-inline">
+                    <li>
+                        <a href="#"><i class="fa fa-facebook fa-fw fa-3x"></i></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-dribbble fa-fw fa-3x"></i></a>
+                    </li>
+                </ul>
+                <hr class="small">
+                <p class="text-muted">Copyright &copy; Your Website 2014</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Custom Theme JavaScript -->
+<script>
+// Closes the sidebar menu
+$("#menu-close").click(function(e) {
+    e.preventDefault();
+    $("#sidebar-wrapper").toggleClass("active");
+});
+// Opens the sidebar menu
+$("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#sidebar-wrapper").toggleClass("active");
+});
+// Scrolls to the selected menu item on the page
+$(function() {
+    $('a[href*=#]:not([href=#])').click(function() {
+        if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+            if (target.length) {
+                $('html,body').animate({
+                    scrollTop: target.offset().top
+                }, 1000);
+                return false;
+            }
+        }
+    });
+});
+</script>
+
+</body>
+
+</html>
