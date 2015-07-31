@@ -151,7 +151,8 @@ flite.controller('Logistics', function ($rootScope){
     };
 
     this.weightLabels = ["<2kg","2-5kg","5-10kg","10-16kg","16-23kg"];
-    this.sizeLabels = ["small items(phone, watch, etc)","medium-small(clothes, shoe, etc)","medium(bag, laptop, etc)","medium-large(carry-on, etc)","large(big luggage, etc)"];
+    this.sizeLabels = ["small items(phone, watch, etc)","medium-small(clothes, shoe, etc)",
+    "medium(bag, laptop, etc)","medium-large(carry-on, etc)","large(big luggage, etc)"];
     this.valueLabels = ["<$500","$500-$1000","$1000-$1500","$1500-$2000","$2000-$2500"];
 
     this.weightprice = function(){
@@ -204,21 +205,24 @@ flite.controller('Logistics', function ($rootScope){
     var placeSearch, autocomplete, autocomplete2, autocomplete3;
 
     this.initialize = function() {
-        autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'), { types: [ '(cities)' ] });
+        autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'), 
+          { types: [ '(cities)' ] });
 
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
             var place = autocomplete.getPlace();
             temp.sender.from = place.formatted_address;
         });
 
-        autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('autocomplete2'), { types: [ '(cities)' ] });
+        autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('autocomplete2'), 
+          { types: [ '(cities)' ] });
 
         google.maps.event.addListener(autocomplete2, 'place_changed', function() {
             var place = autocomplete2.getPlace();
             temp.sender.to = place.formatted_address;
         });
 
-        autocomplete3 = new google.maps.places.Autocomplete(document.getElementById('autocomplete3'), { types: [ 'geocode' ] });
+        autocomplete3 = new google.maps.places.Autocomplete(document.getElementById('autocomplete3'), 
+          { types: [ 'geocode' ] });
 
         google.maps.event.addListener(autocomplete3, 'place_changed', function() {
             var place = autocomplete3.getPlace();
@@ -229,9 +233,15 @@ flite.controller('Logistics', function ($rootScope){
 
 
 flite.controller('Deliver', function ($rootScope){
-  this.deliverer={user: $rootScope.sessionUser, sender: null, from: "", to:"", reciever: null, dateOfTravel: new Date()};
+  this.deliverer={user: $rootScope.sessionUser, sender: null, from: "", to:"", reciever: null, 
+  dateOfTravel: new Date()};
+
+  this.senders = [];
 
   var temp = this;
+
+
+  $rootScope.matches = [];
 
   this.save= function(){
       var Deliverers = Parse.Object.extend("Deliverers");
@@ -246,18 +256,22 @@ flite.controller('Deliver', function ($rootScope){
 
       deliverer.save(null, {
         success: function(deliverer) {
-          var sameCities = new Parse.Query("Senders");
+          var match = new Parse.Query("Senders");
 
-          sameCities.equalTo("from", temp.deliverer.from);
-          sameCities.equalTo("to", temp.deliverer.to);
-          sameCities.greaterThan("byWhen", temp.deliverer.dateOfTravel);
+          match.equalTo("from", temp.deliverer.from);
+          match.equalTo("to", temp.deliverer.to);
+          match.greaterThan("byWhen", temp.deliverer.dateOfTravel);
           
-          sameCities.find({
+          match.find({
             success: function(senders) {
-              alert(senders.length);
+              if(senders.length == 0){
+                alert("Found no matches");
+              }
+
               for (var i = 0; i < senders.length; i++) {
                 var sender = senders[i];
-                console.log(sender.id);
+                $rootScope.matches[i] = sender.id;
+                alert("Found a match with a sender with id: " + $rootScope.matches[i]);
               }
             },
             error: function(error) {
@@ -274,14 +288,16 @@ flite.controller('Deliver', function ($rootScope){
   var placeSearch, autocomplete, autocomplete2;
 
   this.initialize = function() {
-      autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'), { types: [ '(cities)' ] });
+      autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'), 
+        { types: [ '(cities)' ] });
 
       google.maps.event.addListener(autocomplete, 'place_changed', function() {
           var place = autocomplete.getPlace();
           temp.deliverer.from = place.formatted_address;
       });
 
-      autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('autocomplete2'), { types: [ '(cities)' ] });
+      autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('autocomplete2'), 
+        { types: [ '(cities)' ] });
 
       google.maps.event.addListener(autocomplete2, 'place_changed', function() {
           var place = autocomplete2.getPlace();
@@ -291,6 +307,20 @@ flite.controller('Deliver', function ($rootScope){
 });
 
 flite.controller('Search', function (){
+  var senders = new Parse.Query("Senders");
+  this.sender={user: null, reciever: null, from: "", to:"", byWhen: new Date(), item:null};
 
-  
+  for (var i = 0; i < $rootScope.matches.length; i++) {
+    senders.get($rootScope.matches[i], {
+      success: function(sender) {
+        // The object was retrieved successfully.
+
+        
+      },
+      error: function(object, error) {
+        // The object was not retrieved successfully.
+        // error is a Parse.Error with an error code and message.
+      }
+    });
+  }
 });

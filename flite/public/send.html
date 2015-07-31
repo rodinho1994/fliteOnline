@@ -28,11 +28,11 @@
     <div id="fb-root"></div>
 
     <div ng-controller="Logistics as l" class="container" ng-init="l.initialize()">
-      <div class="page-header title">
+      <div class="page-header">
         <h1 color="black">Send a Parcel</h1>
       </div>
 
-      <div class="title">
+      <div >
         <h2>Item:</h2>
       </div>
 
@@ -79,28 +79,35 @@
 
 
 
-      <div class="title">
+      <div>
         <h2>Logistics:</h2>
       </div>
 
       <div id="logistics">
         <div class="row">
-          <h4>From:</h4>
-          <input  id="autocomplete" type="text" class="form-control col-sm-12 input-lg" placeholder="Departure City" required>
+          <div class="col-lg-12 col-xs-12 col-md-12">
+            <h4>From:</h4>
+            <input  id="autocomplete" type="text" class="form-control col-sm-12 input-lg" placeholder="Departure City" required>
+          </div>
         </div>
         
         <div class="row">
-          <h4>To:</h4>
-           <input id="autocomplete2" type="text"  class="form-control col-sm-12 input-lg" placeholder="Destination City" required>
+          <div class="col-lg-12 col-xs-12 col-md-12">
+            <h4>To:</h4>
+            <input id="autocomplete2" type="text"  class="form-control col-sm-12 input-lg" placeholder="Destination City" required>
+          </div>
         </div>
 
         <div class="row">
-          <h4>By when:</h4>
-          <input type="date" ng-model="l.sender.byWhen" class="form-control col-sm-12 input-lg">
+          <div class="col-lg-12 col-xs-12 col-md-12">
+            <h4>By when:</h4>
+            <input type="date" ng-model="l.sender.byWhen" class="form-control col-sm-12 input-lg">
+          </div>
         </div>
       
 
         <div class="row">
+          <div class="col-lg-12 col-xs-12 col-md-12">
           <br></br>
 
           <h4>Reciever Information:</h4>
@@ -124,11 +131,11 @@
 
           <br>
           <div class="row">
-            <div class="col-lg-4 col-lg-offset-5">
-              <input class="btn-lg btn-danger" ng-click="l.save()" type="submit" value="Post" />
+            <div class="col-lg-4 col-xs-4 col-md-4 center-block">
+              <input class="btn btn-lg btn-danger" ng-click="l.save()" type="submit" value="Post" />
             </div>  
           </div> 
-
+          </div>
         </div>
 
       </div>
