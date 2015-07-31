@@ -43,14 +43,21 @@ body {
 
 }
 .title{
-  color:white;
+  color: white;
 }
 
 .inputs{
   right: 15px;
 }
+.left_select{
+  background-color:rgba(255, 198, 193, .7);
+  border-style: solid;
+  border-width: 7px;
+  border-color: purple;
+}
 .left{
   background-color:rgba(255, 198, 193, .7);
+  border-style: solid;
 
 }
 .center{
@@ -64,10 +71,18 @@ background-color: rgba(255, 241, 193, .7);
   color: white;
 }
 .heighter{
-  height: 300px;
+  height: 270px;
   border-radius: 7px;
-  padding: 9px;
+  padding: 10px;
+  margin-bottom: 20px;
 }
-
-
+.buttoner{
+  position: relative;
+  top: 75px; 
+}
+.buttoner2{
+  position: relative;
+  top: 75px;
+  right: 10px;
+}
 
