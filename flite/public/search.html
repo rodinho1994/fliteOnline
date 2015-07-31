@@ -9,6 +9,9 @@
 	<title>Matches</title>
 </head>
 <body>
+<div class="footer">
+	     		<h1>Total:</h1>
+	     	</div>
 <div class="container" ng-controller="poster">
 	<div class="page-header title">
         <font color="white"><h1>Matches:</h1></font>
@@ -36,11 +39,12 @@
 	     		<button type="radio" ng-model="clicked" ng-show="clicked" ng-click="clicked = !clicked" class="btn btn-md btn-primary buttoner2"ng-class="{ 'btn-danger': ($index % 3 == 0), 'btn-success' : ($index % 3 == 1), 'btn-info' : ($index % 3 == 2) }">UnSelect</button>
 	     	</div>
 	     	</div>
+	     	</div>   
 	     	</div>
-	     
-	     	</div>
-     		
+
+
      	</div>
+
      		
      	</div>
      </div>
@@ -53,7 +57,7 @@
  		$scope.posts = postsArray;
  		$scope.clicked = false;
  	});
- 	var postsArray = [{item: 'iphone6', sender: 'Rodolfo', when: '2015-08-19',price: 300, address: "Hogwarts avenue the best place in the world"},{item: 'ipad', sender: 'Zehua', when: '2015-09-12',price: 280, address: "The Great fucking wall of china"}, {item: 'imac', sender: 'kader', when: '2015-09-11',price: 500, address: "58 rue gueznaya is the shit man"},{item: 'iPod', sender: 'Rodolfo', when: '2015-08-19',price: 300, address: "Hogwarts avenue the best place in the world"},{item: 'iphone6', sender: 'Rodolfo', when: '2015-08-19',price: 300, address: "Hogwarts avenue the best place in the world"}]
+ 	var postsArray = [{item: 'iphone6', sender: 'Rodolfo', when: '2015-08-19',price: 300, address: "Hogwarts avenue the best place in the world"},{item: 'ipad', sender: 'Zehua', when: '2015-09-12',price: 280, address: "The Great fucking wall of china"}, {item: 'imac', sender: 'kader', when: '2015-09-11',price: 500, address: "58 rue gueznaya is the shit man"},{item: 'iPod', sender: 'Rodolfo', when: '2015-08-19',price: 300, address: "Hogwarts avenue the best place in the world"},{item: 'iphone6', sender: 'Rodolfo', when: '2015-08-19',price: 300, address: "Hogwarts avenue the best place in the world"},{item: 'iphone6', sender: 'Rodolfo', when: '2015-08-19',price: 300, address: "Hogwarts avenue the best place in the world"},{item: 'ipad', sender: 'Zehua', when: '2015-09-12',price: 280, address: "The Great fucking wall of china"}, {item: 'imac', sender: 'kader', when: '2015-09-11',price: 500, address: "58 rue gueznaya is the shit man"},{item: 'iPod', sender: 'Rodolfo', when: '2015-08-19',price: 300, address: "Hogwarts avenue the best place in the world"},{item: 'iphone6', sender: 'Rodolfo', when: '2015-08-19',price: 300, address: "Hogwarts avenue the best place in the world"},{item: 'iphone6', sender: 'Rodolfo', when: '2015-08-19',price: 300, address: "Hogwarts avenue the best place in the world"},{item: 'ipad', sender: 'Zehua', when: '2015-09-12',price: 280, address: "The Great fucking wall of china"}, {item: 'imac', sender: 'kader', when: '2015-09-11',price: 500, address: "58 rue gueznaya is the shit man"},{item: 'iPod', sender: 'Rodolfo', when: '2015-08-19',price: 300, address: "Hogwarts avenue the best place in the world"},{item: 'iphone6', sender: 'Rodolfo', when: '2015-08-19',price: 300, address: "Hogwarts avenue the best place in the world"}]
  </script>
 
 
