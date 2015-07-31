@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html >
 <head>
- <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for $scope template -->
-    <link href="css/deliver.css" rel="stylesheet">
-  <title class="title">Deliver</title>
+    <title class="title">Deliver</title>
 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="../../favicon.ico">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/deliver.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    
+    <script src="js/ie-emulation-modes-warning.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
     <script type="text/javascript" src="js/filter.js"></script>
     <script type="text/javascript" src="js/parse-angular.js"></script>
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
 
 </head>
 
@@ -28,16 +35,16 @@
       </div>
       <div class="col-lg-6 col-md-6 col-xs-6 title">
         <h2 class="title">To:</h2>
-        <input id="autocomplete2" type="text" class="form-control input-lg col-lg-12" placeholder="City Destination" required>
+        <input id="autocomplete2" type="text" class="form-control input-lg col-lg-12" placeholder="Destination City" required>
       </div>
     </div>
 
     <div class="cool"><br>
-      <h2 class="title">Arrival Date & Time</h2>
+      <h2 class="title">Arrival Date</h2>
       <input type="date" ng-model="d.deliverer.dateOfTravel" class="form-control input-lg" >
     </div><br>
 
-    <button ng-click="d.save()" class="btn btn-lg btn-danger cool">Search</button>
+    <button ng-click="d.save()" class="btn btn-lg btn-danger center">Search</button>
   </div>
  
  </body>

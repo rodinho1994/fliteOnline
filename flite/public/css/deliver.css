@@ -51,10 +51,10 @@ body {
 .inputs{
   right: 15px;
 }
-.cool {
+.center {
     display: block;
     margin-left: auto;
-    margin-right: auto }
+    margin-right: auto; }
 }
 .whiter{
   color: white;
