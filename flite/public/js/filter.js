@@ -229,48 +229,68 @@ flite.controller('Logistics', function ($rootScope){
 
 
 flite.controller('Deliver', function ($rootScope){
+  this.deliverer={user: $rootScope.sessionUser, sender: null, from: "", to:"", reciever: null, dateOfTravel: new Date()};
 
-    this.deliverer={user: $rootScope.sessionUser, sender: null, from: "", to:"", reciever: null, dateOfTravel: new Date()};
+  var temp = this;
 
-    var temp = this;
+  this.save= function(){
+      var Deliverers = Parse.Object.extend("Deliverers");
+      var deliverer = new Deliverers();
+      
+      deliverer.set("user", this.deliverer.user);
+      deliverer.set("sender", this.deliverer.sender);
+      deliverer.set("from", this.deliverer.from);
+      deliverer.set("to", this.deliverer.to);
+      deliverer.set("reciever", this.deliverer.reciever);
+      deliverer.set("dateOfTravel", this.deliverer.dateOfTravel);
 
-    this.save= function(){
-        var Deliverers = Parse.Object.extend("Deliverers");
-        var deliverer = new Deliverers();
-        
-        deliverer.set("user", this.deliverer.user);
-        deliverer.set("sender", this.deliverer.sender);
-        deliverer.set("from", this.deliverer.from);
-        deliverer.set("to", this.deliverer.to);
-        deliverer.set("reciever", this.deliverer.reciever);
-        deliverer.set("dateOfTravel", this.deliverer.dateOfTravel);
+      deliverer.save(null, {
+        success: function(deliverer) {
+          var sameCities = new Parse.Query("Senders");
 
-        deliverer.save(null, {
-          success: function(deliverer) {
-            alert("Success!");  
-          },
-          error: function(deliverer, error) {
-            console.log('Failed to create new object, with error code: ' + error.message);
-          }
-        });
-    };
+          sameCities.equalTo("from", temp.deliverer.from);
+          sameCities.equalTo("to", temp.deliverer.to);
+          sameCities.greaterThan("byWhen", temp.deliverer.dateOfTravel);
+          
+          sameCities.find({
+            success: function(senders) {
+              alert(senders.length);
+              for (var i = 0; i < senders.length; i++) {
+                var sender = senders[i];
+                console.log(sender.id);
+              }
+            },
+            error: function(error) {
+              alert("Error: " + error.code + " " + error.message);
+            }
+          });
+        },
+        error: function(deliverer, error) {
+          console.log('Failed to create new object, with error code: ' + error.message);
+        }
+      });
+  };
 
+  var placeSearch, autocomplete, autocomplete2;
 
-    var placeSearch, autocomplete, autocomplete2;
+  this.initialize = function() {
+      autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'), { types: [ '(cities)' ] });
 
-    this.initialize = function() {
-        autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'), { types: [ '(cities)' ] });
+      google.maps.event.addListener(autocomplete, 'place_changed', function() {
+          var place = autocomplete.getPlace();
+          temp.deliverer.from = place.formatted_address;
+      });
 
-        google.maps.event.addListener(autocomplete, 'place_changed', function() {
-            var place = autocomplete.getPlace();
-            temp.deliverer.from = place.formatted_address;
-        });
+      autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('autocomplete2'), { types: [ '(cities)' ] });
 
-        autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('autocomplete2'), { types: [ '(cities)' ] });
+      google.maps.event.addListener(autocomplete2, 'place_changed', function() {
+          var place = autocomplete2.getPlace();
+          temp.deliverer.to = place.formatted_address;
+      });
+  };
+});
 
-        google.maps.event.addListener(autocomplete2, 'place_changed', function() {
-            var place = autocomplete2.getPlace();
-            temp.deliverer.to = place.formatted_address;
-        });
-    };
+flite.controller('Search', function (){
+
+  
 });

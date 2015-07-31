@@ -9,7 +9,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
-  background: url(../img/send.jpg) no-repeat center center scroll;
+  background: url(../img/airport.jpg) no-repeat center center scroll;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -47,14 +47,7 @@ body {
   color:#FF0066;
 }
 
-#price{
-  background-color: rgba(31,111,222, .55);
 
-}
-#logistics{
-  background-color: rgba(91, 201, 60, .55)
-
-}
 .title{
   text-align: center;
   color: white;
