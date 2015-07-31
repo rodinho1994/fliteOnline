@@ -16,7 +16,8 @@
         Name: <input type="text" ng-model="u.user.name" /><br />
         Email: <input type="email" ng-model="u.user.email" /><br />
         Password: <input type="password" ng-model="u.user.password" /><br />
-        <button type="submit" ng-click="u.signUp()">Sign up</button>
+        <button type="submit" ng-hide="sessionUser" ng-click="u.signUp()">Sign up</button>
+        <button type="submit" ng-show="sessionUser" ng-click="u.fLink()">Link</button>
       </form>
 
     </div>

@@ -9,7 +9,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
-  background: url(../img/objects.jpg) no-repeat center center scroll;
+  background: url(../img/send.jpg) no-repeat center center scroll;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;

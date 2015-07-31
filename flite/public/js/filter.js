@@ -46,7 +46,7 @@ flite.controller('UserForm', function($rootScope){
         user.signUp(null, {
           success: function(user) {
             $rootScope.sessionUser = Parse.User.current();
-            window.location.href = "index.html";
+            alert("Welcome! Now link your Facebook account please");
           },
           error: function(item, error) {
             console.log('Failed to create new object, with error code: ' + error.message);
@@ -71,7 +71,8 @@ flite.controller('UserForm', function($rootScope){
         if (!Parse.FacebookUtils.isLinked($rootScope.sessionUser)) {
           Parse.FacebookUtils.link($rootScope.sessionUser, null, {
             success: function(user) {
-              alert("Woohoo, user logged in with Facebook!");
+              alert("Succesfully linked with Facebook!");
+              window.location.href = "index.html";
             },
             error: function(user, error) {
               alert(error.message);
@@ -87,7 +88,6 @@ flite.controller('UserForm', function($rootScope){
 });
 
 flite.controller('Logistics', function ($rootScope){
-
     this.sender={user: $rootScope.sessionUser, reciever: null, from: "", to:"", byWhen: new Date(), item:null};
 
     this.reciever={name: "", phone:"", address: ""};
