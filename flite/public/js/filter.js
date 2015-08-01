@@ -306,66 +306,66 @@ flite.controller('Deliver', function ($rootScope){
   };
 });
 
-flite.controller('Search', function (){
-  var senders = new Parse.Query("Senders");
-  this.sender=[{user: "", reciever: "", address:"", byWhen: new Date(), 
-    item:"", weight: "", size: "", price: "", }];
+flite.controller('Search', function ($rootScope){
+  $rootScope.matches[0]= "tLI65xSl3o";
+  $rootScope.matches[1]= "1AFhvZuDbo";
 
+  var senders = new Parse.Query("Senders");
+
+  this.sender = [];
+  
   var user = new Parse.Query("_User");
   var reciever = new Parse.Query("Recievers");
   var item = new Parse.Query("Item");
 
   var temp = this;
 
-  for (var i = 0; i < $rootScope.matches.length; i++) {
-    senders.get($rootScope.matches[i], {
-      success: function(sender) {
+  var i =0;
 
-        temp.sender.byWhen = sender.get("byWhen");
+  this.get = function(){
+    for (i= 0; i < $rootScope.matches.length; i++) {
+      senders.get($rootScope.matches[i], {
+        success: function(sender) {
 
+          user.get(sender.get("user").id, {
+            success: function(user) {
 
-        user.get(sender.get("user"), {
-          success: function(user) {
-            // The object was retrieved successfully.
-            temp.sender.user = user.get("name");
+              reciever.get(sender.get("reciever").id, {
+                success: function(reciever) {
 
-          },
-          error: function(object, error) {
-            // The object was not retrieved successfully.
-            // error is a Parse.Error with an error code and message.
-          }
-        });
+                  item.get(sender.get("item").id, {
+                    success: function(item) {
 
-        reciever.get(sender.get("reciever"), {
-          success: function(reciever) {
-            // The object was retrieved successfully.
-            temp.sender.reciever = reciever.get("name");
-            temp.sender.address = reciever.get("address");
-          },
-          error: function(object, error) {
-            // The object was not retrieved successfully.
-            // error is a Parse.Error with an error code and message.
-          }
-        });
+                      temp.sender.push({
+                        user: user.get("username"), reciever: reciever.get("name"), address: reciever.get("address"), 
+                        byWhen: sender.get("byWhen"), item: item.get("name"), weight: item.get("weight"), 
+                        size: item.get("size"), price: item.get("price")     
+                      });
+                    },
+                    error: function(object, error) {
+                      // The object was not retrieved successfully.
+                      // error is a Parse.Error with an error code and message.
+                    }
+                  });
 
-        item.get(sender.get("item"), {
-          success: function(item) {
-            // The object was retrieved successfully.
-            temp.sender.item = item.get("name");
-            temp.sender.address = item.get("address");
-          },
-          error: function(object, error) {
-            // The object was not retrieved successfully.
-            // error is a Parse.Error with an error code and message.
-          }
-        });
-
-        
-      },
-      error: function(object, error) {
-        // The object was not retrieved successfully.
-        // error is a Parse.Error with an error code and message.
-      }
-    });
+                },
+                error: function(object, error) {
+                  // The object was not retrieved successfully.
+                  // error is a Parse.Error with an error code and message.
+                }
+              });
+            },
+            error: function(object, error) {
+              // The object was not retrieved successfully.
+              // error is a Parse.Error with an error code and message.
+            }
+          });
+        },
+        error: function(object, error) {
+          // The object was not retrieved successfully.
+          // error is a Parse.Error with an error code and message.
+        }
+      });
+    };
   }
 });
