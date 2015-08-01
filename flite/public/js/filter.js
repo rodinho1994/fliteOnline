@@ -347,7 +347,7 @@ flite.controller('Search', function ($rootScope, $scope){
                     temp.posts.push({
                       user: user.get("username"), address: reciever.get("address"), 
                       when: sender.get("byWhen"), item: item.get("name"), weight: item.get("weight"), 
-                      size: item.get("size"), price: item.get("price")
+                      size: item.get("size"), price: item.get("price") * 0.9
                     });
                   },
                   error: function(object, error) {
