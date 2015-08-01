@@ -1,20 +1,37 @@
 <!DOCTYPE html>
-<html ng-app="match">
+<html ng-app="Flite">
 <head>
-<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for $scope template -->
     <link href="css/search.css" rel="stylesheet">
 
 	<title>Matches</title>
+
+
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="../../favicon.ico">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    
+    <script src="js/ie-emulation-modes-warning.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+    <script type="text/javascript" src="js/filter.js"></script>
+    <script type="text/javascript" src="js/parse-angular.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
 </head>
 <body>
-<div class="container" ng-controller="poster">
+<div class="container" ng-controller="Search as s">
 	<div class="page-header title">
         <font color="white"><h1>Matches:</h1></font>
       </div>
+      
      <div class="row">
-     	<div class="col-lg-4 col-md-6 col-xs-12" ng-repeat="post in posts track by $index">
+     	<div class="col-lg-4 col-md-6 col-xs-12" ng-repeat="post in s.posts track by $index">
 	     	<div class="heighter" ng-class="{ 'left': ($index % 3 == 0) && clicked == false,'left_select': ($index % 3 == 0) && clicked == true, 'center' : ($index % 3 == 1) && clicked == false,'center_select' : ($index % 3 == 1) && clicked == true, 'right' : ($index % 3 == 2)&& clicked == false,'right_select' : ($index % 3 == 2)&& clicked == true }">
 
 	     	<div class="row">
@@ -44,11 +61,7 @@
 	     		<button type="radio" ng-show="!clicked" ng-model="clicked" ng-click="clicked = !clicked" class="btn btn-md btn-primary buttoner"ng-class="{ 'btn-danger': ($index % 3 == 0), 'btn-success' : ($index % 3 == 1), 'btn-info' : ($index % 3 == 2) }">Select</button>
 	     		<button type="radio" ng-model="clicked" ng-show="clicked" ng-click="clicked = !clicked" class="btn btn-md btn-primary buttoner2"ng-class="{ 'btn-danger': ($index % 3 == 0), 'btn-success' : ($index % 3 == 1), 'btn-info' : ($index % 3 == 2) }">UnSelect</button>
 	     		</div>
-	     
-
-
-
-
+	    
 	     	</div>
 	     	</div>   
 	     	</div>
@@ -67,17 +80,6 @@
      	
      </div>
  </div>
- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
- <script type="text/javascript">
- 	var app = angular.module('match',[]);
- 	app.controller('poster', function($scope){
- 		$scope.food = "hello world";
- 		$scope.posts = postsArray;
- 		$scope.clicked = false;
- 	});
- 	var postsArray = [{item: 'iphone6', user: 'Rodolfo', when: '2015-08-19',price: 300, address: "Hogwarts avenue the best place in the world"},{item: 'ipad', user: 'Zehua', when: '2015-09-12',price: 280, address: "The Great fucking wall of china"}, {item: 'imac', user: 'kader', when: '2015-09-11',price: 500, address: "58 rue gueznaya is the shit man"},{item: 'iPod', user: 'Rodolfo', when: '2015-08-19',price: 300, address: "Hogwarts avenue the best place in the world"}]
- </script>
-
 
 </body>
 </html>

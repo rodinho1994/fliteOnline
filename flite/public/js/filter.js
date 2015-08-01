@@ -1,5 +1,6 @@
 var flite = angular.module('Flite', ['parse-angular']);
 
+
 flite.run(function($rootScope) {
     Parse.initialize("TYM8QwWiHHFHBogeIk8N2UahFS5p9fvoLpRjG5LL", "3iOvI03egswlVQn5K1WMCLdLQJbjHxoAoYN7o3Wm"); 
     
@@ -232,16 +233,27 @@ flite.controller('Logistics', function ($rootScope){
 });
 
 
-flite.controller('Deliver', function ($rootScope){
+flite.factory('Matches', function () {
+    var data = [];
+
+    return {
+        get: function () {
+            return data;
+        },
+        set: function (id) {
+            data.push(id);
+        }
+    };
+});
+
+
+flite.controller('Deliver', function ($rootScope, Matches){
   this.deliverer={user: $rootScope.sessionUser, sender: null, from: "", to:"", reciever: null, 
   dateOfTravel: new Date()};
 
   this.senders = [];
 
   var temp = this;
-
-
-  $rootScope.matches = [];
 
   this.save= function(){
       var Deliverers = Parse.Object.extend("Deliverers");
@@ -270,9 +282,11 @@ flite.controller('Deliver', function ($rootScope){
 
               for (var i = 0; i < senders.length; i++) {
                 var sender = senders[i];
-                $rootScope.matches[i] = sender.id;
-                alert("Found a match with a sender with id: " + $rootScope.matches[i]);
+                Matches.set(sender.id);
+                alert("Found a match with a sender with id: " + Matches.data.length);
               }
+
+              window.location.href = "search.html";
             },
             error: function(error) {
               alert("Error: " + error.code + " " + error.message);
@@ -306,13 +320,16 @@ flite.controller('Deliver', function ($rootScope){
   };
 });
 
-flite.controller('Search', function ($rootScope){
-  $rootScope.matches[0]= "tLI65xSl3o";
-  $rootScope.matches[1]= "1AFhvZuDbo";
+flite.controller('Search', function ($rootScope, $scope, Matches){
+  // $rootScope.matches = [];
+  // $rootScope.matches[0]= "tLI65xSl3o";
+  // $rootScope.matches[1]= "1AFhvZuDbo";
 
   var senders = new Parse.Query("Senders");
 
-  this.sender = [];
+  this.posts = [];
+
+  $scope.clicked = false 
   
   var user = new Parse.Query("_User");
   var reciever = new Parse.Query("Recievers");
@@ -320,52 +337,52 @@ flite.controller('Search', function ($rootScope){
 
   var temp = this;
 
-  var i =0;
+  var matches = Matches.get();
 
-  this.get = function(){
-    for (i= 0; i < $rootScope.matches.length; i++) {
-      senders.get($rootScope.matches[i], {
-        success: function(sender) {
+  for (var i= 0; i < matches; i++) {
+    senders.get(matches[i], {
+      success: function(sender) {
 
-          user.get(sender.get("user").id, {
-            success: function(user) {
+        user.get(sender.get("user").id, {
+          success: function(user) {
 
-              reciever.get(sender.get("reciever").id, {
-                success: function(reciever) {
+            reciever.get(sender.get("reciever").id, {
+              success: function(reciever) {
 
-                  item.get(sender.get("item").id, {
-                    success: function(item) {
+                item.get(sender.get("item").id, {
+                  success: function(item) {
 
-                      temp.sender.push({
-                        user: user.get("username"), reciever: reciever.get("name"), address: reciever.get("address"), 
-                        byWhen: sender.get("byWhen"), item: item.get("name"), weight: item.get("weight"), 
-                        size: item.get("size"), price: item.get("price")     
-                      });
-                    },
-                    error: function(object, error) {
-                      // The object was not retrieved successfully.
-                      // error is a Parse.Error with an error code and message.
-                    }
-                  });
+                    temp.posts.push({
+                      user: user.get("username"), address: reciever.get("address"), 
+                      when: sender.get("byWhen"), item: item.get("name"), weight: item.get("weight"), 
+                      size: item.get("size"), price: item.get("price")
+                    });
 
-                },
-                error: function(object, error) {
-                  // The object was not retrieved successfully.
-                  // error is a Parse.Error with an error code and message.
-                }
-              });
-            },
-            error: function(object, error) {
-              // The object was not retrieved successfully.
-              // error is a Parse.Error with an error code and message.
-            }
-          });
-        },
-        error: function(object, error) {
-          // The object was not retrieved successfully.
-          // error is a Parse.Error with an error code and message.
-        }
-      });
-    };
+                  },
+                  error: function(object, error) {
+                    // The object was not retrieved successfully.
+                    // error is a Parse.Error with an error code and message.
+                  }
+                });
+
+              },
+              error: function(object, error) {
+                // The object was not retrieved successfully.
+                // error is a Parse.Error with an error code and message.
+              }
+            });
+          },
+          error: function(object, error) {
+            // The object was not retrieved successfully.
+            // error is a Parse.Error with an error code and message.
+          }
+        });
+      },
+      error: function(object, error) {
+        // The object was not retrieved successfully.
+        // error is a Parse.Error with an error code and message.
+      }
+    });
   }
+  
 });
