@@ -308,12 +308,57 @@ flite.controller('Deliver', function ($rootScope){
 
 flite.controller('Search', function (){
   var senders = new Parse.Query("Senders");
-  this.sender={user: null, reciever: null, from: "", to:"", byWhen: new Date(), item:null};
+  this.sender=[{user: "", reciever: "", address:"", byWhen: new Date(), 
+    item:"", weight: "", size: "", price: "", }];
+
+  var user = new Parse.Query("_User");
+  var reciever = new Parse.Query("Recievers");
+  var item = new Parse.Query("Item");
+
+  var temp = this;
 
   for (var i = 0; i < $rootScope.matches.length; i++) {
     senders.get($rootScope.matches[i], {
       success: function(sender) {
-        // The object was retrieved successfully.
+
+        temp.sender.byWhen = sender.get("byWhen");
+
+
+        user.get(sender.get("user"), {
+          success: function(user) {
+            // The object was retrieved successfully.
+            temp.sender.user = user.get("name");
+
+          },
+          error: function(object, error) {
+            // The object was not retrieved successfully.
+            // error is a Parse.Error with an error code and message.
+          }
+        });
+
+        reciever.get(sender.get("reciever"), {
+          success: function(reciever) {
+            // The object was retrieved successfully.
+            temp.sender.reciever = reciever.get("name");
+            temp.sender.address = reciever.get("address");
+          },
+          error: function(object, error) {
+            // The object was not retrieved successfully.
+            // error is a Parse.Error with an error code and message.
+          }
+        });
+
+        item.get(sender.get("item"), {
+          success: function(item) {
+            // The object was retrieved successfully.
+            temp.sender.item = item.get("name");
+            temp.sender.address = item.get("address");
+          },
+          error: function(object, error) {
+            // The object was not retrieved successfully.
+            // error is a Parse.Error with an error code and message.
+          }
+        });
 
         
       },
