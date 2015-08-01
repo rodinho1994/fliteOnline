@@ -2,7 +2,8 @@ var flite = angular.module('Flite', ['parse-angular']);
 
 
 flite.run(function($rootScope) {
-    Parse.initialize("TYM8QwWiHHFHBogeIk8N2UahFS5p9fvoLpRjG5LL", "3iOvI03egswlVQn5K1WMCLdLQJbjHxoAoYN7o3Wm"); 
+    Parse.initialize("TYM8QwWiHHFHBogeIk8N2UahFS5p9fvoLpRjG5LL", 
+        "3iOvI03egswlVQn5K1WMCLdLQJbjHxoAoYN7o3Wm"); 
     
     if(Parse.User.current() != null){
         $rootScope.sessionUser = Parse.User.current();
@@ -89,11 +90,12 @@ flite.controller('UserForm', function($rootScope){
 });
 
 flite.controller('Logistics', function ($rootScope){
-    this.sender={user: $rootScope.sessionUser, reciever: null, from: "", to:"", byWhen: new Date(), item:null};
+    this.sender={user: $rootScope.sessionUser, reciever: null, from: "", 
+      to:"", byWhen: new Date(), item:null};
 
     this.reciever={name: "", phone:"", address: ""};
 
-    this.item={user: $rootScope.sessionUser, name: "", size: 1, weight: 1, value:1};
+    this.item={user: $rootScope.sessionUser, name: "", size: 1, weight: 1, value:1, price: 0};
 
     var temp = this;
 
@@ -105,6 +107,7 @@ flite.controller('Logistics', function ($rootScope){
         item.set("size", this.item.size);
         item.set("weight", this.item.weight);
         item.set("value", this.item.value);
+        item.set("price", this.item.price);
 
 
         var Sender = Parse.Object.extend("Senders");
@@ -199,7 +202,8 @@ flite.controller('Logistics', function ($rootScope){
     };
 
     this.total = function(){
-      return this.weightprice() + this.sizeprice() + this.valueprice();
+      this.item.price = this.weightprice() + this.sizeprice() + this.valueprice()
+      return this.item.price;
     };
 
 
@@ -233,27 +237,15 @@ flite.controller('Logistics', function ($rootScope){
 });
 
 
-flite.factory('Matches', function () {
-    var data = [];
-
-    return {
-        get: function () {
-            return data;
-        },
-        set: function (id) {
-            data.push(id);
-        }
-    };
-});
-
-
-flite.controller('Deliver', function ($rootScope, Matches){
+flite.controller('Deliver', function ($rootScope){
   this.deliverer={user: $rootScope.sessionUser, sender: null, from: "", to:"", reciever: null, 
   dateOfTravel: new Date()};
 
   this.senders = [];
 
   var temp = this;
+
+  var matches =[];
 
   this.save= function(){
       var Deliverers = Parse.Object.extend("Deliverers");
@@ -272,19 +264,19 @@ flite.controller('Deliver', function ($rootScope, Matches){
 
           match.equalTo("from", temp.deliverer.from);
           match.equalTo("to", temp.deliverer.to);
-          match.greaterThan("byWhen", temp.deliverer.dateOfTravel);
+          match.greaterThanOrEqualTo("byWhen", temp.deliverer.dateOfTravel);
           
           match.find({
             success: function(senders) {
               if(senders.length == 0){
                 alert("Found no matches");
               }
-
-              for (var i = 0; i < senders.length; i++) {
-                var sender = senders[i];
-                Matches.set(sender.id);
-                alert("Found a match with a sender with id: " + Matches.data.length);
+              
+              for (var i= 0; i < senders.length; i++) {
+                matches.push(senders[i].id);
               }
+
+              localStorage["matches"] = JSON.stringify(matches);
 
               window.location.href = "search.html";
             },
@@ -320,7 +312,7 @@ flite.controller('Deliver', function ($rootScope, Matches){
   };
 });
 
-flite.controller('Search', function ($rootScope, $scope, Matches){
+flite.controller('Search', function ($rootScope, $scope){
   // $rootScope.matches = [];
   // $rootScope.matches[0]= "tLI65xSl3o";
   // $rootScope.matches[1]= "1AFhvZuDbo";
@@ -337,9 +329,9 @@ flite.controller('Search', function ($rootScope, $scope, Matches){
 
   var temp = this;
 
-  var matches = Matches.get();
+  var matches = JSON.parse(localStorage["matches"]);
 
-  for (var i= 0; i < matches; i++) {
+  for (var i= 0; i < matches.length; i++) {
     senders.get(matches[i], {
       success: function(sender) {
 
@@ -357,7 +349,6 @@ flite.controller('Search', function ($rootScope, $scope, Matches){
                       when: sender.get("byWhen"), item: item.get("name"), weight: item.get("weight"), 
                       size: item.get("size"), price: item.get("price")
                     });
-
                   },
                   error: function(object, error) {
                     // The object was not retrieved successfully.
