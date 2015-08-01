@@ -20,8 +20,8 @@ body {
   z-index: 1;
   position: fixed;
   bottom: 0;
-  background-color: rgba(255, 198, 193, .7);
-  height: 75px;
+  background-color: rgba(178, 240, 178,.7);
+  height: 60px;
   width: 100%;
   /* Set the fixed height of the footer here */
  
@@ -39,7 +39,7 @@ body {
 .container {
   width: auto;
   max-width: 900px;
-  padding: 0 15px;
+  padding: 15px;
 }
 .container .text-muted {
   margin: 20px 0;
@@ -94,13 +94,26 @@ border-color: rgba(62, 187, 250, .7)
   margin-bottom: 20px;
 }
 .buttoner{
-  position: relative;
-  top: 75px; 
+  position: absolute;
+  bottom: 30px;
+  right: 60px;
+
 }
 .buttoner2{
-  position: relative;
-  top: 75px;
-  right: 10px;
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+}
+#total{
+  position: absolute;
+  left: 35px;
+  bottom: 3px;
+  color: white;
 }
 
+#button_shift{
+  position: absolute;
+  right: 35px;
+  top: 8px;
+}
 
