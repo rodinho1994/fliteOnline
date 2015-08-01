@@ -7,7 +7,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
-  background: url(../img/deliver.jpg) no-repeat center center scroll;
+  background: url(../img/delivery.jpg) no-repeat center center scroll;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -57,11 +57,10 @@ body {
   background-color:rgba(255, 198, 193, .7);
   border-style: solid;
   border-width: 7px;
-  border-color: purple;
+  border-color: rgba(62, 187, 250, .7);
 }
 .left{
   background-color:rgba(255, 198, 193, .7);
-  border-style: solid;
 
 }
 .center{
@@ -71,6 +70,20 @@ background-color: rgba(255, 241, 193, .7);
   background-color: rgba(127, 151, 165, .7);
 
 }
+.right_select{
+  background-color: rgba(127, 151, 165, .7);
+  border-style: solid;
+  border-width: 7px;
+  border-color: rgba(62, 187, 250, .7);
+}
+.center_select{
+background-color: rgba(255, 241, 193, .7);
+border-style: solid;
+border-width: 7px;
+border-color: rgba(62, 187, 250, .7)
+
+}
+
 .whiter{
   color: white;
 }
