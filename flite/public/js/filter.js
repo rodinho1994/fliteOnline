@@ -271,14 +271,15 @@ flite.controller('Deliver', function ($rootScope){
               if(senders.length == 0){
                 alert("Found no matches");
               }
+              else{
+                for (var i= 0; i < senders.length; i++) {
+                  matches.push(senders[i].id);
+                }
 
-              for (var i= 0; i < senders.length; i++) {
-                matches.push(senders[i].id);
+                localStorage["matches"] = JSON.stringify(matches);
+
+                window.location.href = "search.html";
               }
-
-              localStorage["matches"] = JSON.stringify(matches);
-
-              window.location.href = "search.html";
             },
             error: function(error) {
               alert("Error: " + error.code + " " + error.message);
@@ -374,15 +375,10 @@ flite.controller('Search', function ($rootScope, $scope){
         // error is a Parse.Error with an error code and message.
       }
     });
-<<<<<<< HEAD
   }  
 
-  this.gettotalprice = function(){
-    for(var i= 0; i < matches.length; i++){
-      if(this.posts.clicked == true){
-        this.totalPrice = this.totalPrice + this.posts[i].price * 0.9;
-      }
-    }
+  this.done = function(){
+    alert("Thanks for your cooperation!");
   }
 });
 
@@ -406,4 +402,3 @@ flite.controller('Transactions', function (){
     }
   });
 });
->>>>>>> origin/master
