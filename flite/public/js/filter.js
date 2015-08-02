@@ -374,6 +374,26 @@ flite.controller('Search', function ($rootScope, $scope){
         // error is a Parse.Error with an error code and message.
       }
     });
-  }
+  }  
+});
+
+flite.controller('Transactions', function (){
+  this.transactions = [];
+
+  var temp = this;
+
+  var query = new Parse.Query("Transactions");
+  query.exists("objectId");
   
+  query.find({
+    success: function(transactions) {
+      for (var i= 0; i < transactions.length; i++) {
+        temp.transactions.push({sender: transactions[i].get("sender"), 
+          deliverer: transactions[i].get("deliverer"), 
+          chargedToSender: transactions[i].get("chargedToSender"), 
+          profitCompany: transactions[i].get("profitCompany"), 
+          profitDeliverer: transactions[i].get("profitDeliverer")});
+      }
+    }
+  });
 });
