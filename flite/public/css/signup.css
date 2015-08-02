@@ -33,3 +33,14 @@ body {
 	margin-right: auto;
 	display: block;
 }
+
+.button_center{
+	position: relative;
+	left:255px;
+	bottom: 15px
+
+}
+
+.button_hide{
+	opacity: .5;
+}
