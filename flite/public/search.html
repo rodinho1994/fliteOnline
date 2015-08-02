@@ -15,7 +15,7 @@
 
     <link rel="icon" href="../../favicon.ico">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-    
+
     <script src="js/ie-emulation-modes-warning.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
@@ -24,15 +24,15 @@
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
     <script src="../js/ie10-viewport-bug-workaround.js"></script>
 </head>
-<body>
-<div class="container" ng-controller="Search as s">
+<body ng-controller="Search as s">
+<div class="container" >
 	<div class="page-header title">
         <font color="white"><h1>Matches:</h1></font>
       </div>
-      
+
      <div class="row">
      	<div class="col-lg-4 col-md-6 col-xs-12" ng-repeat="post in s.posts track by $index">
-	     	<div class="heighter" ng-class="{ 'left': ($index % 3 == 0) && clicked == false,'left_select': ($index % 3 == 0) && clicked == true, 'center' : ($index % 3 == 1) && clicked == false,'center_select' : ($index % 3 == 1) && clicked == true, 'right' : ($index % 3 == 2)&& clicked == false,'right_select' : ($index % 3 == 2)&& clicked == true }">
+	     	<div class="heighter" ng-class="{ 'left': ($index % 3 == 0) && post.clicked == false,'left_select': ($index % 3 == 0) && post.clicked == true, 'center' : ($index % 3 == 1) && post.clicked == false,'center_select' : ($index % 3 == 1) && post.clicked == true, 'right' : ($index % 3 == 2)&& post.clicked == false,'right_select' : ($index % 3 == 2)&& post.clicked == true }">
 
 	     	<div class="row">
 	     	<div class="col-lg-6 col-md-6 col-xs-6">
@@ -52,32 +52,32 @@
 	     			<h4>When:</h4><span ng-bind='post.when | date'></span>
 	     		</div>
 	     		<div class="col-lg-6 col-md-6 col-xs-6">
-	     			<h2><span ng-bind='post.price | currency'></span></h2> 
+	     			<h2><span ng-bind='post.price | currency'></span></h2>
 	     		</div>
-	     	</div>
-	     	
-	     		
-	     		<div >
-	     		<button type="radio" ng-show="!clicked" ng-model="clicked" ng-click="clicked = !clicked" class="btn btn-md btn-primary buttoner"ng-class="{ 'btn-danger': ($index % 3 == 0), 'btn-success' : ($index % 3 == 1), 'btn-info' : ($index % 3 == 2) }">Select</button>
-	     		<button type="radio" ng-model="clicked" ng-show="clicked" ng-click="clicked = !clicked" class="btn btn-md btn-primary buttoner2"ng-class="{ 'btn-danger': ($index % 3 == 0), 'btn-success' : ($index % 3 == 1), 'btn-info' : ($index % 3 == 2) }">UnSelect</button>
-	     		</div>
-	    
-	     	</div>
-	     	</div>   
 	     	</div>
 
-	
+
+	     		<div >
+	     		<button type="radio"  ng-show="!post.clicked" ng-model="post.clicked" ng-click="post.clicked = !post.clicked ; (s.totalPrice = s.totalPrice + post.price)" class="btn btn-md btn-primary buttoner"ng-class="{ 'btn-danger': ($index % 3 == 0), 'btn-success' : ($index % 3 == 1), 'btn-info' : ($index % 3 == 2) }">Select</button>
+	     		<button type="radio" ng-model="post.clicked" ng-show="post.clicked" ng-click="post.clicked = !post.clicked ; (s.totalPrice = s.totalPrice - post.price)" class="btn btn-md btn-primary buttoner2"ng-class="{ 'btn-danger': ($index % 3 == 0), 'btn-success' : ($index % 3 == 1), 'btn-info' : ($index % 3 == 2) }">UnSelect</button>
+	     		</div>
+
+	     	</div>
+	     	</div>
+	     	</div>
+
+
 </div>
 </div>
 
 
 <div class="footer">
-<h1 id="total">Total Money Earned:
+<h1 id="total">Total Money Earned: {{s.totalPrice | currency}} 
 </h1><button class="btn btn-lg btn-success" id="button_shift">DONE!!</button>
   </div>
 
-     		
-     	
+
+
      </div>
  </div>
 

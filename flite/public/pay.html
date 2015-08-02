@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<!--This is the angularjs for sender's page; sender need to write down these information-->
+<html>
+<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
+<body>
+
+<div ng-app="">
+ 
+<p>Input something in the input box:</p>
+<p>For the item's information, senders need to write down:</p>
+<p>Name: <input type="text" ng-model="name"></p>
+<p>Value: <input type="number" ng-model="value"></p>
+<p>Weight: <input type="text" ng-model="weight"></p>
+
+<p>OrderDate: <input type="date" ng-model="orderdate"></p>
+
+<!--<p ng-bind="name"></p> -->
+
+<!--
+</div>
+
+<div data-ng-app="" data-ng-init="quantity=1;price=5">
+
+<h2>Cost Calculator</h2>
+
+Quantity: <input type="number" ng-model="quantity">
+Price: <input type="number" ng-model="price">
+
+<p><b>Total in dollar:</b> {{quantity * price}}</p>
+
+</div>
+
+
+<div ng-app="" ng-init="names=[
+{name:'Jani',country:'Norway'},
+{name:'Hege',country:'Sweden'},
+{name:'Kai',country:'Denmark'}]">
+
+<p>Looping with objects:</p>
+<ul>
+  <li ng-repeat="x in names">
+  {{ x.name + ', ' + x.country }}</li>
+</ul>
+
+</div>
+
+-->
+
+
+
+<script>
+
+
+Parse.initialize("TYM8QwWiHHFHBogeIk8N2UahFS5p9fvoLpRjG5LL", "3iOvI03egswlVQn5K1WMCLdLQJbjHxoAoYN7o3Wm");
+        var Item = Parse.Object.extend("Item");
+        var query = new Parse.Query(Item);
+        query.get("ebbt0SjOgr", {
+          success: function(object) {
+            // The object was retrieved successfully.
+            //console.log(object.get("name"));
+			console.log(object.get("size"));
+          },
+          error: function(object, error) {
+            // The object was not retrieved successfully.
+            // error is a Parse.Error with an error code and message.
+            console.log('Failed to create new object, with error code: ' + error.message);
+          }
+        });
+
+var sizeprice;
+var weightprice;
+var valueprice;
+
+
+function SizePrice(){
+	/*item's size 1 is small item(like phone, watch etc), size 5 is a big luggage */
+	if(item.size == 1){
+		sizeprice = 10;
+	}else if(item.size == 2){
+		sizeprice = 20;
+	}else if(item.size == 3){
+		sizeprice = 30;
+	}else if(item.size == 4){
+		sizeprice = 50;
+	}else if(item.size == 5){
+		sizeprice = 70;
+		console.log(object.get("size"));
+	}
+}
+
+
+function WeightPrice(){
+	/*weitght level 1 is item's weight <= 2kg; 2kg < level 2 <= 5kg < level 3 <= 10kg < level 4 <= 16kg < level 5 <= 23kg */ 
+	if(item.weight == 1){
+		weightprice = 10;
+	}else if(item.weight == 2){
+		weightprice = 30;
+	}else if(item.weight == 3){
+		weightprice = 80;
+	}else if(item.weight == 4){
+		weightprice = 140;
+	}else if(item.weight == 5){
+		weightprice = 200
+	}
+}
+
+function ValuePrice(){
+	/* 0 < item's value level 1 <= 500CAD < level 2 <= 1000CAD < level 3 <= 1500CAD < level 4 <= 2000CAD < level 5 <= 2500CAD*/ 
+	/*if(0 < item.value && item.value < 500){
+		valueprice = 0.01 * item.value;
+	}else if(500 <= item.value && item.value <1500){
+		valueprice = 0.01 * 500 + (item.value - 500)*0.05;
+	}else if(1500 <= item.value && item.value <= 2500){
+		valueprice = 0.01 * 500 + 1000 * 0.05 + (item.value - 1500)*0.07;
+	}else{
+		alert("The value of what you send should below 2,500 CAD");
+	}*/
+	
+	if(item.value == 1){
+		valueprice = 10;
+	}else if(item.value == 2){
+		valueprice = 50;
+	}else if(item.value == 3){
+		valueprice = 100;
+	}else if(item.value == 1){
+		valueprice = 150;
+	}else if(item.value == 1){
+		valueprice = 200;
+	}
+}
+
+function Pay(){
+	SizePrice();
+	WeightPrice();
+	ValuePrice();
+	return sizeprice + weightprice + valueprice;
+}
+
+
+
+</script>
+</body>
+
+</html>
+
+
+
+
