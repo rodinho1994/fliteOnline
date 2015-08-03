@@ -5,7 +5,7 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320, height=device-height" />
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -30,8 +30,8 @@
 
 </head>
 
-<body ng-app="Flite">
-    <div id="fb-root"></div>
+<body>
+    <!-- <div id="fb-root"></div> -->
     <!-- Navigation -->
     <!--a id="login" href="#about" class="btn btn-info btn-danger toggle">Log in / Sign Up</a-->
     <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
@@ -58,36 +58,42 @@
 
     <!-- Header -->
     <header id="login1" class="header">
-        <div class="text-vertical-center" ng-controller="UserForm as u">
+        <div class="text-vertical-center">
             <h1>fliite</h1>
             <h3>Your Parcels via You</h3>
-            <br/>
 
-            <a class="btn btn-info btn-lg" ng-show="sessionUser" class="btn btn-info btn-lg" href="chooser.html">SEND</a>
-
-            <br/>
-
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <a ng-hide="sessionUser" class="btn btn-info btn-lg" href="login.html" data-toggle="modal" data-target="#loginModal">Log In</a>
-
-                    <a ng-hide="sessionUser" class="btn btn-info btn-lg" href="signup1.html" >Sign Up</a>
-
-                    <button class="btn btn-info btn-lg" ng-show="sessionUser" ng-click="u.logOut()" class="btn btn-info btn-lg">Log Out</a>
+            <br>
+                <div class="col-lg-12">
+                    <a class="btn btn-primary btn-lg" href="login.html" data-toggle="modal" data-target="#loginModal">Log In</a>
                 </div>
-            </div>
+        
+            <br><br><br>
+            <br>
+                <div class="col-lg-12">
+                    <a class="btn btn-success btn-lg" href="signup1.html" >Sign Up</a>
+                </div>
+           <br><br>
+            <br>
+                <div class="col-lg-12">
+
+<br>
+                    <a href="#about" class="btn btn-info btn-lg">Find Out More</a>
+
+                </div>
+    </div>
+     </header>
 
 <div id="loginModal" class="modal fade modalStuff" role="dialog">
       <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bgPurple">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
-    <h2 class="modal-title">Login</h>
+    <h2 class="modal-title">Login</h2>
       </div>
       <div class="modal-body">
       <div class="row">
     <div class="col-lg-12 col-md-12 col-xs-12">
-        <h4><span class="title2" >*</span> Username</h4>
+        <h4><span class="title2 purple" >*</span> USERNAME</h4>
     </div>
 </div>
 <div class="row">
@@ -97,7 +103,7 @@
 </div>
       <div class="row">
     <div class="col-lg-12 col-md-12 col-xs-12">
-        <h4><span class="title2" >*</span> PASSWORD</h4>
+        <h4><span class="title2 purple" >*</span> PASSWORD</h4>
     </div>
 </div>
 <div class="row">
@@ -109,22 +115,16 @@
       </div>
       <div class="modal-footer">
       </div>
-      
-        <button class="btn btn-md btn-success" data-placement="bottom">Ok</button>
-        <button class="btn btn-md btn-warning" data-dismiss="modal">Cancel</button><br>
-        
+      <div class="row">
+      <div >
+        <button class="btn btn-md btn-success buttonModal" data-placement="bottom">Ok</button>
+        <button class="btn btn-md btn-warning buttonModal" data-dismiss="modal">Cancel</button>
+        </div><br>
+        </div>
       </div>
     </div>
 
     </div>
-            
-
-            <div id="status"></div>
-
-            <a href="#about" class="btn btn-info btn-lg">Find Out More</a>
-
-        </div>
-    </header>
 
     <!-- About -->
     <section id="about" class="about">

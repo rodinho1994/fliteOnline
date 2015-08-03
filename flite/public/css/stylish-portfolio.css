@@ -235,6 +235,19 @@ hr.small {
 .modalStuff{
     text-align: left;
 }
+.buttonModal{
+    position: relative;
+    left: 255px;
+}
+.bgPurple{
+    background-color: rgba(0,0,153,.7);
+    color: white
+}
+.purple{
+    color: rgba(0,0,153,.7);
+}
+
+
 
 /* Map */
 
