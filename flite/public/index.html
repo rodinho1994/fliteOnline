@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="Flite" lang="en">
 
 <head>
 
@@ -30,7 +30,7 @@
 
 </head>
 
-<body>
+<body ng-controller="LogIn as l">
     <!-- <div id="fb-root"></div> -->
     <!-- Navigation -->
     <!--a id="login" href="#about" class="btn btn-info btn-danger toggle">Log in / Sign Up</a-->
@@ -60,16 +60,22 @@
     <header id="login1" class="header">
         <div class="text-vertical-center">
             <h1>fliite</h1>
-            <h3>Your Parcels via You</h3>
+            <h2>Your Parcels via You</h2>
 
             <br>
-               
-                    <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loginModal">Log In</a>
-                
+                    <a ng-hide="sessionUser" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loginModal">Log In</a>
+
+                    <h3 ng-show="sessionUser">You are now logged in!</h3>
         
             <br><br>
-               
-                    <a class="btn btn-success btn-lg" href="signup1.html" >Sign Up</a>
+                    
+                    <a ng-hide="sessionUser" class="btn btn-success btn-lg" href="signup1.html" >Sign Up</a>
+                    
+                    <a ng-show="sessionUser" class="btn btn-success btn-lg" href="chooser.html" >Send/Deliver</a>
+           
+            <br><br>
+
+                    <button ng-show="sessionUser" class="btn btn-danger btn-lg" ng-click="l.logOut()" >Log Out</button>
                 
            
             <br><br>
@@ -90,12 +96,12 @@
       <div class="modal-body">
       <div class="row">
     <div class="col-lg-12 col-md-12 col-xs-12">
-        <h4><span class="title2 purple" >*</span> USERNAME</h4>
+        <h4><span class="title2 purple" >*</span> EMAIL</h4>
     </div>
 </div>
 <div class="row">
 <div class="col-lg-12">
-<input ng-model="username" type="text" class="form-control input-lg" placeholder="Please enter username" required>
+<input ng-model="l.user.email" type="text" class="form-control input-lg" placeholder="Please enter email" required>
 </div>
 </div>
       <div class="row">
@@ -105,7 +111,7 @@
 </div>
 <div class="row">
 <div class="col-lg-12">
-<input ng-model="password" type="text" class="form-control input-lg" placeholder="Please enter password" required>
+<input ng-model="l.user.password" type="password" class="form-control input-lg" placeholder="Please enter password" required>
 </div>
 </div>
       
@@ -114,8 +120,9 @@
       </div>
       <div class="row">
       <div >
-        <button class="btn btn-md btn-success buttonModal" data-placement="bottom">Ok</button>
-        <button class="btn btn-md btn-warning buttonModal" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-md btn-success buttonModal" data-placement="bottom" 
+            ng-click="l.logIn()" >Ok</button>
+        <button class="btn btn-md btn-warning buttonModal" >Cancel</button>
         </div><br>
         </div>
       </div>

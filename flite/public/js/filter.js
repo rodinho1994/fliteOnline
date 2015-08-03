@@ -31,19 +31,19 @@ flite.run(function($rootScope) {
 flite.controller('SignUp', function($rootScope){
   var temp = this;
 
-  this.user = {username: "", firstName: "", lastName: "", 
+  this.user = {firstName: "", lastName: "", 
     password: "", email:"", phoneNumber:"", address:""};
 
   this.signUp = function(){
     var User = Parse.Object.extend("_User");
     var user = new User();
 
-    user.set("username", this.user.username);
+    user.set("username", this.user.email);
     user.set("firstName", this.user.firstName);
     user.set("lastName", this.user.lastName);
     user.set("password", this.user.password);
     user.set("email", this.user.email);
-    user.set("phoneNumber", this.user.phone);
+    user.set("phoneNumber", this.user.phoneNumber);
     user.set("address", this.user.address);
     user.set("admin", false);
 
@@ -72,11 +72,6 @@ flite.controller('SignUp', function($rootScope){
     }
   };
 
-  this.logOut = function(){
-    Parse.User.logOut();
-    $rootScope.sessionUser = Parse.User.current();
-  }
-
   var placeSearch, autocomplete;
 
   this.initialize = function() {
@@ -91,11 +86,11 @@ flite.controller('SignUp', function($rootScope){
 });
 
 
-flite.controller('LogIn', function(){
-  this.user = new Parse.User();
+flite.controller('LogIn', function($rootScope){
+  this.user = {password: "", email:""};
 
   this.logIn = function(){
-    Parse.User.logIn(this.user.name, this.user.password, {
+    Parse.User.logIn(this.user.email, this.user.password, {
       success: function(user) {
             // Do stuff after successful login.
             $rootScope.sessionUser = Parse.User.current();
@@ -103,9 +98,15 @@ flite.controller('LogIn', function(){
           },
           error: function(user, error) {
             // The login failed. Check error to see why.
+            alert("Try again")
           }
         });
   };
+
+  this.logOut = function(){
+    Parse.User.logOut();
+    $rootScope.sessionUser = Parse.User.current();
+  }
 });
 
 flite.controller('Logistics', function ($rootScope){
