@@ -13,7 +13,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/send.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-    
+
     <script src="js/ie-emulation-modes-warning.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
@@ -21,7 +21,7 @@
     <script type="text/javascript" src="js/parse-angular.js"></script>
     <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
     <script src="../js/ie10-viewport-bug-workaround.js"></script>
-    
+
   </head>
 
   <body ng-app="Flite">
@@ -44,7 +44,7 @@
             <div class="row">
               <div class="col-lg-12" >
                 <h4>Parcel Name:</h4>
-                <input id="name" type="text" ng-model="l.item.name" class="form-control col-sm-6 input-lg" placeholder="Enter a name for your parcel " required>
+                <input id="name" type="text" maxlength="30" ng-model="l.item.name" class="form-control col-sm-6 input-lg" placeholder="Enter a name for your parcel " required>
               </div>
             </div>
 
@@ -69,7 +69,7 @@
 
             </div>
           </div>
-      
+
           <div class="col-md-5">
             <h1>Price: <span ng-bind='(l.total()| currency)'></span></h1>
           </div>
@@ -90,7 +90,7 @@
             <input  id="autocomplete" type="text" class="form-control col-sm-12 input-lg" placeholder="Departure City" required>
           </div>
         </div>
-        
+
         <div class="row">
           <div class="col-lg-12 col-xs-12 col-md-12">
             <h4>To:</h4>
@@ -104,7 +104,7 @@
             <input type="date" ng-model="l.sender.byWhen" class="form-control col-sm-12 input-lg">
           </div>
         </div>
-      
+
 
         <div class="row">
           <div class="col-lg-12 col-xs-12 col-md-12">
@@ -125,14 +125,14 @@
           <br>
           <div class="row">
             <div class="col-lg-12 col-xs-12 col-md-12">
-              <input id="autocomplete3" type="text" class="form-control input-lg" placeholder="Address of Reciever" required>
-            </div>  
-          </div> 
+              <input id="autocomplete3" maxlength="80" type="text" class="form-control input-lg" placeholder="Address of Reciever" required>
+            </div>
+          </div>
 
           <br>
           <div class="row">
               <input class="btn btn-lg btn-danger center" ng-click="l.save()" type="submit" value="Post" />
-          </div> 
+          </div>
           </div>
         </div>
 
