@@ -114,7 +114,7 @@ Create your account and send or deliver in minutes.</h3>
 <div class="row">
 	<div class="col-lg-12">
 		<button class="center btn btn-lg btn-primary" 
-		ng-class="{ 'button_hide': !signup.$error.required}" data-toggle="modal" title="Hooray!" data-target="#facebookModal" disabled="signup.$valid">CREATE ACCOUNT</button>{{signup.$valid}}<br>
+		ng-class="{ 'button_hide': !signup.$error.required}" data-toggle="modal" data-target="#facebookModal" disabled="!signup.$valid">CREATE ACCOUNT</button>{{signup.$valid}}<br>
     </div></div>
     <!-- Facebook Modal -->
     <div id="facebookModal" class="modal fade" role="dialog">
