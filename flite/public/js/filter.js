@@ -29,19 +29,22 @@ flite.run(function($rootScope) {
 });
 
 flite.controller('SignUp', function($rootScope){
-  this.user = new Parse.User();
+  var temp = this;
+
+  this.user = {username: "", firstName: "", lastName: "", 
+    password: "", email:"", phoneNumber:"", address:""};
 
   this.signUp = function(){
-    var temp = this;
-
     var User = Parse.Object.extend("_User");
     var user = new User();
 
-    user.set("username", this.user.name);
+    user.set("username", this.user.username);
+    user.set("firstName", this.user.firstName);
+    user.set("lastName", this.user.lastName);
     user.set("password", this.user.password);
     user.set("email", this.user.email);
     user.set("phoneNumber", this.user.phone);
-    user.set("creditNumber", this.user.credit);
+    user.set("address", this.user.address);
     user.set("admin", false);
 
     user.signUp(null, {
@@ -54,19 +57,6 @@ flite.controller('SignUp', function($rootScope){
       }
     });
   }
-
-  this.logIn = function(){
-    Parse.User.logIn(this.user.name, this.user.password, {
-      success: function(user) {
-            // Do stuff after successful login.
-            $rootScope.sessionUser = Parse.User.current();
-            window.location.href = "index.html";
-          },
-          error: function(user, error) {
-            // The login failed. Check error to see why.
-          }
-        });
-  };
 
   this.fLink = function() {
     if (!Parse.FacebookUtils.isLinked($rootScope.sessionUser)) {
@@ -86,6 +76,36 @@ flite.controller('SignUp', function($rootScope){
     Parse.User.logOut();
     $rootScope.sessionUser = Parse.User.current();
   }
+
+  var placeSearch, autocomplete;
+
+  this.initialize = function() {
+    autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'),
+      { types: [ 'geocode' ] });
+
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+      var place = autocomplete.getPlace();
+      temp.user.address = place.formatted_address;
+    });
+  };
+});
+
+
+flite.controller('LogIn', function(){
+  this.user = new Parse.User();
+
+  this.logIn = function(){
+    Parse.User.logIn(this.user.name, this.user.password, {
+      success: function(user) {
+            // Do stuff after successful login.
+            $rootScope.sessionUser = Parse.User.current();
+            window.location.href = "index.html";
+          },
+          error: function(user, error) {
+            // The login failed. Check error to see why.
+          }
+        });
+  };
 });
 
 flite.controller('Logistics', function ($rootScope){
