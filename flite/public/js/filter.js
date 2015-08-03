@@ -117,7 +117,7 @@ flite.controller('Logistics', function ($rootScope){
     sender.set("from", this.sender.from);
     sender.set("to", this.sender.to);
     sender.set("byWhen", this.sender.byWhen);
-    //sender.set("selected", true);
+    sender.set("selected", false);
 
 
 
@@ -242,84 +242,61 @@ flite.controller('Deliver', function ($rootScope){
   this.deliverer={user: $rootScope.sessionUser, sender: null, from: "", to:"", reciever: null,
   dateOfTravel: new Date()};
 
-  this.senders = [];
-
   var temp = this;
 
   var matches =[];
 
   this.save= function(){
-    var Deliverers = Parse.Object.extend("Deliverers");
-    var deliverer = new Deliverers();
+    var match = new Parse.Query("Senders");
 
-    deliverer.set("user", this.deliverer.user);
-    deliverer.set("sender", this.deliverer.sender);
-    deliverer.set("from", this.deliverer.from);
-    deliverer.set("to", this.deliverer.to);
-    deliverer.set("reciever", this.deliverer.reciever);
-    deliverer.set("dateOfTravel", this.deliverer.dateOfTravel);
+    match.equalTo("from", this.deliverer.from);
+    match.equalTo("to", this.deliverer.to);
+    match.greaterThanOrEqualTo("byWhen", this.deliverer.dateOfTravel);
+    match.equalTo("selected", false);
 
-    deliverer.save(null, {
-      success: function(deliverer) {
-        var match = new Parse.Query("Senders");
-
-        match.equalTo("from", temp.deliverer.from);
-        match.equalTo("to", temp.deliverer.to);
-        match.greaterThanOrEqualTo("byWhen", temp.deliverer.dateOfTravel);
-        //match.equalTo("selected", true);
-
-        match.find({
-          success: function(senders) {
-            if(senders.length == 0){
-              alert("Found no matches");
-            }
-            else{
-              for (var i= 0; i < senders.length; i++) {
-                matches.push(senders[i].id);
-              }
-
-              localStorage["matches"] = JSON.stringify(matches);
-
-              window.location.href = "search.html";
-            }
-          },
-          error: function(error) {
-            alert("Error: " + error.code + " " + error.message);
+    match.find({
+      success: function(senders) {
+        if(senders.length == 0){
+          alert("Found no matches");
+        }
+        else{
+          for (var i= 0; i < senders.length; i++) {
+            matches.push(senders[i].id);
           }
-        });
+
+          localStorage["matches"] = JSON.stringify(matches);
+
+          window.location.href = "search.html";
+        }
       },
-      error: function(deliverer, error) {
-        console.log('Failed to create new object, with error code: ' + error.message);
+      error: function(error) {
+        alert("Error: " + error.code + " " + error.message);
       }
     });
-};
+  };
 
-var placeSearch, autocomplete, autocomplete2;
+  var placeSearch, autocomplete, autocomplete2;
 
-this.initialize = function() {
-  autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'),
-    { types: [ '(cities)' ] });
+  this.initialize = function() {
+    autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'),
+      { types: [ '(cities)' ] });
 
-  google.maps.event.addListener(autocomplete, 'place_changed', function() {
-    var place = autocomplete.getPlace();
-    temp.deliverer.from = place.formatted_address;
-  });
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+      var place = autocomplete.getPlace();
+      temp.deliverer.from = place.formatted_address;
+    });
 
-  autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('autocomplete2'),
-    { types: [ '(cities)' ] });
+    autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('autocomplete2'),
+      { types: [ '(cities)' ] });
 
-  google.maps.event.addListener(autocomplete2, 'place_changed', function() {
-    var place = autocomplete2.getPlace();
-    temp.deliverer.to = place.formatted_address;
-  });
-};
+    google.maps.event.addListener(autocomplete2, 'place_changed', function() {
+      var place = autocomplete2.getPlace();
+      temp.deliverer.to = place.formatted_address;
+    });
+  };
 });
 
 flite.controller('Search', function ($rootScope, $scope){
-  // $rootScope.matches = [];
-  // $rootScope.matches[0]= "tLI65xSl3o";
-  // $rootScope.matches[1]= "1AFhvZuDbo";
-
   var senders = new Parse.Query("Senders");
 
   this.posts = [];
@@ -336,7 +313,7 @@ flite.controller('Search', function ($rootScope, $scope){
   for (var i= 0; i < matches.length; i++) {
     senders.get(matches[i], {
       success: function(sender) {
-
+        var id = sender.id;
         user.get(sender.get("user").id, {
           success: function(user) {
 
@@ -349,9 +326,9 @@ flite.controller('Search', function ($rootScope, $scope){
                     temp.posts.push({
                       user: user.get("username"), address: reciever.get("address"),
                       when: sender.get("byWhen"), item: item.get("name"), weight: item.get("weight"),
-                      size: item.get("size"), price: item.get("price") * 0.9, clicked: false
+                      size: item.get("size"), price: item.get("price") * 0.9, clicked: false, 
+                      sender: sender, id: id
                     });
-
                   },
                   error: function(object, error) {
                     console.log('Failed to get object, with error code: ' + error.message);
@@ -377,7 +354,56 @@ flite.controller('Search', function ($rootScope, $scope){
   }  
 
   this.done = function(){
+    var Transactions = Parse.Object.extend("Transactions");
+    
+
+    for (var i= 0; i < this.posts.length; i++) {
+      if(this.posts[i].clicked == true){
+
+        var id = this.posts[i].id
+
+        var transaction = new Transactions();
+
+        transaction.set("sender", this.posts[i].sender);
+        transaction.set("deliverer", $rootScope.sessionUser);
+        transaction.set("chargedToSender", parseFloat((this.posts[i].price/0.9).toFixed(2)));
+        transaction.set("profitCompany", parseFloat(((this.posts[i].price/0.9)*0.1).toFixed(2)));
+        transaction.set("profitDeliverer", parseFloat((this.posts[i].price).toFixed(2)));
+
+        transaction.save(null, {
+          success: function(transaction) {
+            // Execute any logic that should take place after the object is saved.
+            //alert('New object created with objectId: ' + transaction.id);
+
+            var Sender = Parse.Object.extend("Senders");
+            var sender = new Sender();
+
+            sender.id = id;
+            sender.set("selected", true);
+            
+            // Save
+            sender.save(null, {
+              success: function(sender) {
+                // Saved successfully.
+                //alert("Sender deleted")
+              },
+              error: function(sender, error) {
+                // The save failed.
+                // error is a Parse.Error with an error code and description.
+              }
+            });
+          },
+          error: function(transaction, error) {
+            // Execute any logic that should take place if the save fails.
+            // error is a Parse.Error with an error code and message.
+            alert('Failed to create new object, with error code: ' + error.message);
+          }
+        });
+      }
+    }
+
     alert("Thanks for your cooperation!");
+    window.location.href = "index.html";
   }
 });
 
@@ -400,4 +426,29 @@ flite.controller('Transactions', function (){
       }
     }
   });
+});
+
+flite.controller("Reviews", function(){
+  var Reviews = Parse.Object.extend("Reviews");
+  var review = new Reviews();
+
+  this.reviews = [];
+
+  this.review = {sender: null, user: null, rating: 0, comment:""};
+
+  this.addReview = function(){
+    review.set("sender", this.review.sender);
+    review.set("user", this.review.user);
+    review.set("rating", this.review.rating);
+    review.set("comment", this.review.comment);
+
+    review.save(null, {
+      success: function(review) {
+        alert("Success!");
+      },
+      error: function(review, error) {
+        alert(error.message);
+      }
+    });
+  };
 });
