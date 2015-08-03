@@ -28,8 +28,7 @@ flite.run(function($rootScope) {
   }(document, 'script', 'facebook-jssdk'));
 });
 
-flite.controller('UserForm', function($rootScope, $http){
-
+flite.controller('SignUp', function($rootScope){
   this.user = new Parse.User();
 
   this.signUp = function(){
@@ -361,6 +360,7 @@ flite.controller('Search', function ($rootScope, $scope){
       if(this.posts[i].clicked == true){
 
         var id = this.posts[i].id
+        var sender = this.posts[i].sender;
 
         var transaction = new Transactions();
 
@@ -390,6 +390,21 @@ flite.controller('Search', function ($rootScope, $scope){
               error: function(sender, error) {
                 // The save failed.
                 // error is a Parse.Error with an error code and description.
+              }
+            });
+
+            var Reviews = Parse.Object.extend("Reviews");
+            var review = new Reviews();
+
+            review.set("sender", sender);
+            review.set("deliverer", $rootScope.sessionUser);
+
+            review.save(null, {
+              success: function(review) {
+                alert("Success!");
+              },
+              error: function(review, error) {
+                alert(error.message);
               }
             });
           },
@@ -426,29 +441,4 @@ flite.controller('Transactions', function (){
       }
     }
   });
-});
-
-flite.controller("Reviews", function(){
-  var Reviews = Parse.Object.extend("Reviews");
-  var review = new Reviews();
-
-  this.reviews = [];
-
-  this.review = {sender: null, user: null, rating: 0, comment:""};
-
-  this.addReview = function(){
-    review.set("sender", this.review.sender);
-    review.set("user", this.review.user);
-    review.set("rating", this.review.rating);
-    review.set("comment", this.review.comment);
-
-    review.save(null, {
-      success: function(review) {
-        alert("Success!");
-      },
-      error: function(review, error) {
-        alert(error.message);
-      }
-    });
-  };
 });
