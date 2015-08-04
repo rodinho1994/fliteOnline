@@ -71,7 +71,9 @@
                     
                     <a ng-hide="sessionUser" class="btn btn-success btn-lg" href="signup1.html" >Sign Up</a>
                     
-                    <a ng-show="sessionUser" class="btn btn-success btn-lg" href="chooser.html" >Send/Deliver</a>
+                    <a ng-show="sessionUser && !admin" class="btn btn-success btn-lg" href="chooser.html" >Send/Deliver</a>
+
+                    <a ng-show="sessionUser && admin" class="btn btn-warning btn-lg" href="admin.html" >Transactions</a>
            
             <br><br>
 
@@ -122,7 +124,7 @@
       <div >
         <button class="btn btn-md btn-success buttonModal" data-placement="bottom" 
             ng-click="l.logIn()" >Ok</button>
-        <button class="btn btn-md btn-warning buttonModal" >Cancel</button>
+        <button class="btn btn-md btn-warning buttonModal" data-dismiss="modal">Cancel</button>
         </div><br>
         </div>
       </div>

@@ -2,51 +2,47 @@
 <html>
 <head>
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+  <script type="text/javascript" src="js/filter.js"></script>
+  <script type="text/javascript" src="js/parse-angular.js"></script>
 
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
 
-<!-- Latest compiled JavaScript -->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<link href="css/admin.css" rel="stylesheet">
-<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-	<title>ADMIN</title>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+  <link href="css/admin.css" rel="stylesheet">
+
+  <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+  	<title>ADMIN</title>
 </head>
-<body>
-<div class="title-bar">
-	<h1 id="title">Admin Page</h1>
-</div>
-<div class="container">
-  <h2>Transactions</h2>
-  <p>User: Kader</p>            
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Sender</th>
-        <th>Deliver</th>
-        <th>Delivery Charge</th>
-        <th>Sender's Charge</th>
-        <th>Deliverer's Profit</th>
-        <th>fliite Profit</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>55$/td>
-        <td>Doe</td>
-        <td>Doe</td>
-        <td>Doe</td>
-      </tr>
-      <tr>
-    </tbody>
-  </table>
-</div>
 
-
-
+<body ng-app="Flite">
+  <div class="title-bar" >
+  	<h1 id="title">Transactions</h1>
+  </div>
+  <div class="container" ng-controller="Transactions as t">    
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Sender</th>
+          <th>Deliver</th>
+          <th>Sender's Charge</th>
+          <th>Deliverer's Profit</th>
+          <th>fliite Profit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="transaction in t.transactions">
+          <td>{{transaction.sender}}</td>
+          <td>{{transaction.deliverer}}</td>
+          <td>{{transaction.chargedToSender}}</td>
+          <td>{{transaction.profitDeliverer}}</td>
+          <td>{{transaction.profitCompany}}</td>
+        </tr>
+        <tr>
+      </tbody>
+    </table>
+  </div>
 </body>
 </html>

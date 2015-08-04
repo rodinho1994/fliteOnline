@@ -7,6 +7,7 @@ flite.run(function($rootScope) {
 
   if(Parse.User.current() != null){
     $rootScope.sessionUser = Parse.User.current();
+    $rootScope.admin = Parse.User.current().get("admin");
   }
 
   window.fbAsyncInit = function() {
@@ -157,7 +158,8 @@ flite.controller('Logistics', function ($rootScope){
             sender.set("reciever", reciever);
             sender.save(null, {
               success: function(sender) {
-                alert("Success!")
+                alert("Success!");
+                window.location.href = "index.html";
               },
               error: function(item, error) {
                 console.log('Failed to create new object, with error code: ' + error.message);
@@ -376,14 +378,15 @@ flite.controller('Search', function ($rootScope, $scope){
   this.done = function(){
     var Transactions = Parse.Object.extend("Transactions");
     
+    var Sender = Parse.Object.extend("Senders");
+    var sender = new Sender();
 
     for (var i= 0; i < this.posts.length; i++) {
       if(this.posts[i].clicked == true){
 
-        var id = this.posts[i].id
-        var sender = this.posts[i].sender;
-
         var transaction = new Transactions();
+
+        var id = this.posts[i].id
 
         transaction.set("sender", this.posts[i].sender);
         transaction.set("deliverer", $rootScope.sessionUser);
@@ -393,41 +396,7 @@ flite.controller('Search', function ($rootScope, $scope){
 
         transaction.save(null, {
           success: function(transaction) {
-            // Execute any logic that should take place after the object is saved.
-            //alert('New object created with objectId: ' + transaction.id);
-
-            var Sender = Parse.Object.extend("Senders");
-            var sender = new Sender();
-
-            sender.id = id;
-            sender.set("selected", true);
-            
-            // Save
-            sender.save(null, {
-              success: function(sender) {
-                // Saved successfully.
-                //alert("Sender deleted")
-              },
-              error: function(sender, error) {
-                // The save failed.
-                // error is a Parse.Error with an error code and description.
-              }
-            });
-
-            var Reviews = Parse.Object.extend("Reviews");
-            var review = new Reviews();
-
-            review.set("sender", sender);
-            review.set("deliverer", $rootScope.sessionUser);
-
-            review.save(null, {
-              success: function(review) {
-                alert("Success!");
-              },
-              error: function(review, error) {
-                alert(error.message);
-              }
-            });
+        
           },
           error: function(transaction, error) {
             // Execute any logic that should take place if the save fails.
@@ -435,11 +404,25 @@ flite.controller('Search', function ($rootScope, $scope){
             alert('Failed to create new object, with error code: ' + error.message);
           }
         });
+
+        var sender = new Sender();
+
+        sender.id = id;
+        sender.set("selected", true);
+        
+        // Save
+        sender.save(null, {
+          success: function(sender) {
+            window.location.href = "index.html";
+          },
+          error: function(sender, error) {
+            // The save failed.
+            // error is a Parse.Error with an error code and description.
+            alert(error.message);
+          }
+        });
       }
     }
-
-    alert("Thanks for your cooperation!");
-    window.location.href = "index.html";
   }
 });
 
@@ -449,13 +432,12 @@ flite.controller('Transactions', function (){
   var temp = this;
 
   var query = new Parse.Query("Transactions");
-  query.exists("objectId");
   
   query.find({
     success: function(transactions) {
       for (var i= 0; i < transactions.length; i++) {
-        temp.transactions.push({sender: transactions[i].get("sender"), 
-          deliverer: transactions[i].get("deliverer"), 
+        temp.transactions.push({sender: transactions[i].get("sender").id, 
+          deliverer: transactions[i].get("deliverer").id, 
           chargedToSender: transactions[i].get("chargedToSender"), 
           profitCompany: transactions[i].get("profitCompany"), 
           profitDeliverer: transactions[i].get("profitDeliverer")});

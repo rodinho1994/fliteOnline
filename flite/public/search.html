@@ -61,19 +61,17 @@
 	     		<button type="radio"  ng-show="!post.clicked" ng-model="post.clicked" ng-click="post.clicked = !post.clicked ; (s.totalPrice = s.totalPrice + post.price)" class="btn btn-md btn-primary buttoner"ng-class="{ 'btn-danger': ($index % 3 == 0), 'btn-success' : ($index % 3 == 1), 'btn-info' : ($index % 3 == 2) }">Select</button>
 	     		<button type="radio" ng-model="post.clicked" ng-show="post.clicked" ng-click="post.clicked = !post.clicked ; (s.totalPrice = s.totalPrice - post.price)" class="btn btn-md btn-primary buttoner2"ng-class="{ 'btn-danger': ($index % 3 == 0), 'btn-success' : ($index % 3 == 1), 'btn-info' : ($index % 3 == 2) }">UnSelect</button>
 	     		</div>
-
 	     	</div>
 	     	</div>
 	     	</div>
-
-
 </div>
 </div>
 
 
 <div class="footer">
-<h1 id="total">Total Money Earned: {{s.totalPrice | currency}} 
-</h1><button ng-click="s.done()" class="btn btn-lg btn-success" id="button_shift">READY</button>
+	<h1 id="total">Total Money Earned: {{s.totalPrice | currency}}</h1>
+	<button ng-click="s.done()" class="btn btn-lg btn-success" id="button_shift">Checkout</button>
+
   </div>
 
 
